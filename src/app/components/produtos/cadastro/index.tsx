@@ -1,27 +1,59 @@
 "use client"
 
+import { useProdutoService } from "app/app/services";
 import { Input, Layout } from "app/components";
 import { useState } from "react";
+import { Produto } from 'app/app/models/produtos'
+import { setMaxIdleHTTPParsers } from "http";
+
 export const CadastroProdutos: React.FC = () => {
 
+    const service = useProdutoService()
     const [sku, setSku] = useState<string>('')
     const [preco, setPreco] = useState<string>('')
     const [nome, setNome] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
+    const [id, setId] = useState<string> ('')
+    const [cadastro, setCadastro ] = useState<string>('')
+
 
     const submit = () => {
-        const produto = {
+        const produto: Produto = {
             sku: sku,
-            preco: preco,
+            preco: parseFloat(preco),
             nome: nome,
             descricao: descricao
         }
-        console.log(produto)
+
+        service
+            .salvar(produto).then(produtoResposta =>  {
+            setId(String(produtoResposta.id))
+            setCadastro(String (produtoResposta.cadastro))
+        })
     }
 
     return (
 
         <Layout titulo="Produtos">
+            { id &&
+               <div className="columns">
+
+                <Input label="Código: *" 
+                columnClasses="is-half"
+                value = {id}
+                id="inputID"
+                disabled={true}
+                />
+
+                <Input label="Data Cadastro: *" 
+                columnClasses="is-half"
+                value = {cadastro}
+                id="inputDataCadastro"
+                disabled={true}
+                />
+           </div>
+
+            }
             <div className="columns">
 
                 <Input label="SKU: *" 
@@ -54,7 +86,7 @@ export const CadastroProdutos: React.FC = () => {
 
            <div className="field">
                 <label className="label" htmlFor="inputDesc">Descrição: *</label>
-                <div className="control">
+                <div className="control"> 
                     <textarea className="textarea" 
                            id="inputDesc" value={descricao}
                            onChange={event => setDescricao(event.target.value)}
