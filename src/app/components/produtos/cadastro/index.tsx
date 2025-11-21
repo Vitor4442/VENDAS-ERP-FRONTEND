@@ -3,6 +3,7 @@
 import { useProdutoService } from "app/app/services";
 import { Input, Layout } from "app/components";
 import { useState } from "react";
+import { converterEmBigDecimal } from "app/app/util/money";
 import { Produto } from 'app/app/models/produtos'
 import { setMaxIdleHTTPParsers } from "http";
 
@@ -21,7 +22,7 @@ export const CadastroProdutos: React.FC = () => {
         const produto: Produto = {
             id: id,
             sku: sku,
-            preco: parseFloat(preco),
+            preco: converterEmBigDecimal(preco),
             nome: nome,
             descricao: descricao
         }
@@ -79,6 +80,8 @@ export const CadastroProdutos: React.FC = () => {
                 value = {preco}
                 id="inputPreco"
                 placeholder="Digite o Preço do produto"
+                currency = {true}
+                maxLength={16}
                 />
 
 
