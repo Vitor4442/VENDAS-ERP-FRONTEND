@@ -6,6 +6,14 @@ import { useState } from "react";
 import { converterEmBigDecimal } from "app/app/util/money";
 import { Produto } from 'app/app/models/produtos'
 import { Alert } from "app/components/common/message";
+import * as yup from 'yup'
+
+const validationSchema = yup.object().shape({
+    sku: yup.string().required(),
+    nome: yup.string().required(),
+    descricao: yup.string().required(),
+    preco: yup.number().required()
+})
 
 export const CadastroProdutos: React.FC = () => {
 
@@ -27,28 +35,40 @@ export const CadastroProdutos: React.FC = () => {
             nome: nome,
             descricao: descricao
         }
-
-        if(id){
-            service
-            .atualizar(produto).then(resposta => {
-                setMessages([{
-                    tipo: "success",
-                    texto: "Produto atualizado com sucesso!"
-                }])
-            })
-        }
-        else{
+        
+        validationSchema.validate(produto).then(obj => {
             
-            service
-                .salvar(produto).then(produtoResposta =>  {
-                setId(String(produtoResposta.id))
-                setCadastro(String (produtoResposta.cadastro))
-                setMessages([{
-                    tipo: "success",
-                    texto: "Produto Salvo com sucesso!"
-                }])
-            })
-        }
+            if(id){
+                service
+                .atualizar(produto).then(resposta => {
+                    setMessages([{
+                        tipo: "success",
+                        texto: "Produto atualizado com sucesso!"
+                    }])
+                })
+            }
+            else{
+                
+                service
+                    .salvar(produto).then(produtoResposta =>  {
+                    setId(String(produtoResposta.id))
+                    setCadastro(String (produtoResposta.cadastro))
+                    setMessages([{
+                        tipo: "success",
+                        texto: "Produto Salvo com sucesso!"
+                    }])
+                })
+            }
+        }).catch(err => {
+            const field = err.path;
+            const message = err.message;
+            
+            setMessages([{
+                tipo: "danger",
+                field,
+                texto: message
+            }])
+        })
 
     }
 

@@ -6,7 +6,7 @@ interface MessageProps{
 
 export interface Alert{
     tipo: string;
-    fiel?: string;
+    field?: string;
     texto: string;
 }
 
