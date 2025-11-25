@@ -1,11 +1,10 @@
 "use client"
 
 import { useProdutoService } from "app/app/services";
-import { Input, Layout } from "app/components";
+import { Input, Layout, Message } from "app/components";
 import { useState } from "react";
 import { converterEmBigDecimal } from "app/app/util/money";
 import { Produto } from 'app/app/models/produtos'
-import { setMaxIdleHTTPParsers } from "http";
 
 export const CadastroProdutos: React.FC = () => {
 
@@ -45,6 +44,7 @@ export const CadastroProdutos: React.FC = () => {
     return (
 
         <Layout titulo="Produtos">
+            <Message texto="Produto atualizado com sucesso" tipo="success" />
             { id &&
                <div className="columns">
 
