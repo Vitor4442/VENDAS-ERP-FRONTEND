@@ -9,10 +9,10 @@ import { Alert } from "app/components/common/message";
 import * as yup from 'yup'
 
 const validationSchema = yup.object().shape({
-    sku: yup.string().required(),
-    nome: yup.string().required(),
-    descricao: yup.string().required(),
-    preco: yup.number().required()
+    sku: yup.string().required("Campo Obrigatorio"),
+    nome: yup.string().required("Campo Obrigatorio"),
+    descricao: yup.string().required("Campo Obrigatorio"),
+    preco: yup.number().required("Campo Obrigatorio")
 })
 
 export const CadastroProdutos: React.FC = () => {
