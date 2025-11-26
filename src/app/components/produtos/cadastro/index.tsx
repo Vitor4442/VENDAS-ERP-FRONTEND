@@ -7,6 +7,7 @@ import { converterEmBigDecimal } from "app/app/util/money";
 import { Produto } from 'app/app/models/produtos'
 import { Alert } from "app/components/common/message";
 import * as yup from 'yup'
+import Link from "next/link";
 
 const validationSchema = yup.object().shape({
     sku: yup.string().trim().required("Campo Obrigatorio"),
@@ -45,7 +46,7 @@ export const CadastroProdutos: React.FC = () => {
         }
         
         validationSchema.validate(produto).then(obj => {
-            
+            setErrors({})
             if(id){
                 service
                 .atualizar(produto).then(resposta => {
@@ -157,7 +158,9 @@ export const CadastroProdutos: React.FC = () => {
                     </button>
                 </div>
                 <div className="control">
+                    <Link href= "/consultas/produtos">
                     <button className="button">Voltar</button>
+                    </Link>
                 </div>
            </div>
 

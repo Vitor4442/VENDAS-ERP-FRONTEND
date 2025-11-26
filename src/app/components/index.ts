@@ -1,3 +1,3 @@
 export { Input, Message} from "./common";
-export { CadastroProdutos } from "./produtos";
+export { CadastroProdutos, ListagemProdutos} from "./produtos";
 export { Layout } from "./layout";
