@@ -7,6 +7,7 @@ import {Produto} from 'app/app/models/produtos'
 import useSWR from "swr"
 import { httpCliente } from "app/app/http"
 import { AxiosResponse } from "axios"
+import { Loader } from "app/components/common";
 
 export const ListagemProdutos: React.FC = () => {
 
@@ -14,7 +15,7 @@ export const ListagemProdutos: React.FC = () => {
 
         if(!result){
             return(
-                <div>Carregando</div>
+                <Loader/>
             )
         }
     return(

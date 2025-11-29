@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import 'bulma/css/bulma.css'
+import "./components/common/loader/loader.css"
+
 export const metadata: Metadata = {
   title: 'VENDAS', 
   description: 'Uma breve descrição do seu app de vendas', // Metadado recomendado
