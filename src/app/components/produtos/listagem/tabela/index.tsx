@@ -10,11 +10,13 @@ export const TabelaProdutos: React.FC<TabelaProdutosProps> = ({
     return(
         <table className="table is-hoverable is-striped">
             <thead>
+                <tr>
                 <th>Código</th>
                 <th>SKU</th>
                 <th>Nome</th>
                 <th>Preço</th>
                 <th></th>
+                </tr>
             </thead>
             <tbody>
                {

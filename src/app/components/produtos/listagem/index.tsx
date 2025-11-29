@@ -1,20 +1,29 @@
+'use client';
+
 import { Layout } from "app/components/layout"
 import Link from "next/link"
 import { TabelaProdutos } from "./tabela"
 import {Produto} from 'app/app/models/produtos'
+import useSWR from "swr"
+import { httpCliente } from "app/app/http"
+import { AxiosResponse } from "axios"
+
 export const ListagemProdutos: React.FC = () => {
 
-    const produtos: Produto[] = [{
-        id: "1", sku: "3232", nome: "Teste", preco: 234
-    }]
+        const{ data: result, error} = useSWR<AxiosResponse<Produto[]>>('/api/produtos', (url: string) => httpCliente.get(url) )
 
+        if(!result){
+            return(
+                <div>Carregando</div>
+            )
+        }
     return(
         <Layout titulo="Produtos">
             <Link href="/cadastros/produtos">
             <button className="button is-warning">Novo</button>
             </Link>
             <br />
-            <TabelaProdutos produtos={produtos}/>
+            <TabelaProdutos produtos={result.data}/>
         </Layout>
     )
 }
