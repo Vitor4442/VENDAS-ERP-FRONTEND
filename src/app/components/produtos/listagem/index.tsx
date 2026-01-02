@@ -8,13 +8,18 @@ import useSWR from "swr"
 import { httpCliente } from "app/app/http"
 import { AxiosResponse } from "axios"
 import { Loader } from "app/components/common";
+import { useRouter } from "next/navigation";
 
 export const ListagemProdutos: React.FC = () => {
+
+        // 2. Inicialize o hook useRouter
+        const router = useRouter();
 
         const{ data: result, error} = useSWR<AxiosResponse<Produto[]>>('/api/produtos', (url: string) => httpCliente.get(url) )
 
         const editar = (produto:Produto) => {
-            console.log (produto)
+            const url = `/cadastros/produtos?id=${produto.id}`
+            router.push(url)
         }
 
 

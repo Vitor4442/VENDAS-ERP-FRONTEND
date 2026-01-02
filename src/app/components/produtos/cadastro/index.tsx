@@ -2,12 +2,13 @@
 
 import { useProdutoService } from "app/app/services";
 import { Input, Layout, Message } from "app/components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { converterEmBigDecimal } from "app/app/util/money";
 import { Produto } from 'app/app/models/produtos'
 import { Alert } from "app/components/common/message";
 import * as yup from 'yup'
 import Link from "next/link";
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const validationSchema = yup.object().shape({
     sku: yup.string().trim().required("Campo Obrigatorio"),
@@ -34,7 +35,23 @@ export const CadastroProdutos: React.FC = () => {
     const [cadastro, setCadastro ] = useState<string>('')
     const [messages, setMessages] = useState<Array<Alert>>([]) 
     const [errors, setErrors] = useState<FormErros>({})
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const queryId = searchParams.get('id');
 
+    useEffect(() => {
+        if (queryId) {
+            service.carregarProduto(queryId).then(produtoEncontrado => {
+                setId(String(produtoEncontrado.id))
+                setSku(produtoEncontrado.sku ?? '')
+                setNome(produtoEncontrado.nome ?? '')
+                setDescricao(produtoEncontrado.descricao ?? '')
+                setCadastro(produtoEncontrado.cadastro ?? '' )
+                setPreco(String(produtoEncontrado.preco))
+                setCadastro(String(produtoEncontrado.cadastro))
+            })
+        }
+    }, [queryId])
 
     const submit = () => {
         const produto: Produto = {
