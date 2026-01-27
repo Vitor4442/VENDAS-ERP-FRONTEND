@@ -1,7 +1,7 @@
 "use client"
 
 import { useProdutoService } from "app/app/services";
-import { Input, Layout, Message } from "app/components";
+import { Input, InputMoney, Layout } from "app/components";
 import { useState, useEffect } from "react";
 import { converterEmBigDecimal } from "app/app/util/money";
 import { Produto } from 'app/app/models/produtos'
@@ -130,13 +130,12 @@ export const CadastroProdutos: React.FC = () => {
                 error={errors.sku}
                 />
 
-                <Input label="Preço: *" 
+                <InputMoney label="Preço: *" 
                 columnClasses="is-half"
                 onChange={ e => setPreco(e.target.value)}
                 value = {preco}
                 id="inputPreco"
                 placeholder="Digite o Preço do produto"
-                currency = {true}
                 maxLength={16}
                 error={errors.preco}
                 />

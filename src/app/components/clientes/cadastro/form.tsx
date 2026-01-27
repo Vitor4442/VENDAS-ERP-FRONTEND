@@ -28,6 +28,10 @@ export const ClienteForm: React.FC<ClienteFormProps> = ({
         onSubmit,
     })
 
+    const caixaAlta = (value: string) => {
+        return value.toUpperCase();
+    }
+
     return (
         <form onSubmit={formik.handleSubmit}>
                 {formik.values.id &&
@@ -37,7 +41,7 @@ export const ClienteForm: React.FC<ClienteFormProps> = ({
             </div>
                 }
             <div className='columns'>
-                <Input id="nome" columnClasses='is-full' name='nome' onChange={formik.handleChange} value={formik.values.nome} label='Nome: *' autoComplete='off'/>
+                <Input id="nome" columnClasses='is-full' name='nome' onChange={formik.handleChange} value={formik.values.nome} label='Nome: *' autoComplete='off' formatter={caixaAlta}/>
             </div>
 
             <div className='columns'>

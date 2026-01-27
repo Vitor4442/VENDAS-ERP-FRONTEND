@@ -1,3 +1,3 @@
 export { Loader } from './loader'
-export { Input} from './input'
+export { Input, InputMoney } from './input'
 export { Message} from'./message'
